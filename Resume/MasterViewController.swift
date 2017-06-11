@@ -9,22 +9,37 @@
 import UIKit
 
 class MasterViewController: UITableViewController {
+  
+  var resume: Resume!
+  
+  private enum Sections: Int {
+    case Jobs
+    case Education
+    case Projects
+    case Certifications
+    case Skills
+    case Count
+  }
+  
+  private let SectionTitles = [
+    Sections.Jobs.rawValue: "Jobs",
+    Sections.Education.rawValue: "Education",
+    Sections.Projects.rawValue: "Projects",
+    Sections.Certifications.rawValue: "Certifications",
+    Sections.Skills.rawValue: "Skills",
+  ]
 
-  var detailViewController: DetailViewController? = nil
-  var objects = [Any]()
-
+//  var detailViewController: DetailViewController? = nil
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
-    navigationItem.leftBarButtonItem = editButtonItem
-
-    let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-    navigationItem.rightBarButtonItem = addButton
-    if let split = splitViewController {
-        let controllers = split.viewControllers
-        detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-    }
+    
+    self.resume = ObjectManager.shared.resume
+    
+//    if let split = splitViewController {
+//        let controllers = split.viewControllers
+//        detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+//    }
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -32,25 +47,13 @@ class MasterViewController: UITableViewController {
     super.viewWillAppear(animated)
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-
-  func insertNewObject(_ sender: Any) {
-    objects.insert(NSDate(), at: 0)
-    let indexPath = IndexPath(row: 0, section: 0)
-    tableView.insertRows(at: [indexPath], with: .automatic)
-  }
-
   // MARK: - Segues
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "showDetail" {
         if let indexPath = tableView.indexPathForSelectedRow {
-            let object = objects[indexPath.row] as! NSDate
             let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-            controller.detailItem = object
+            controller.detailItem = self.itemForRowAtIndexPath(indexPath)
             controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
             controller.navigationItem.leftItemsSupplementBackButton = true
         }
@@ -60,35 +63,42 @@ class MasterViewController: UITableViewController {
   // MARK: - Table View
 
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    return Sections.Count.rawValue;
+  }
+  
+  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return SectionTitles[section] ?? ""
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return objects.count
+    switch section {
+      case Sections.Jobs.rawValue: return self.resume.jobs?.count ?? 0
+      case Sections.Education.rawValue: return self.resume.education?.count ?? 0
+      case Sections.Projects.rawValue: return self.resume.projects?.count ?? 0
+      case Sections.Certifications.rawValue: return self.resume.certifications?.count ?? 0
+      case Sections.Skills.rawValue: return self.resume.skills?.count ?? 0
+      default: return 0
+    }
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-    let object = objects[indexPath.row] as! NSDate
-    cell.textLabel!.text = object.description
+    cell.textLabel?.text = self.itemForRowAtIndexPath(indexPath)?.name
+    
     return cell
   }
-
-  override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
-    return true
-  }
-
-  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-    if editingStyle == .delete {
-        objects.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
-    } else if editingStyle == .insert {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+  
+  fileprivate func itemForRowAtIndexPath(_ indexPath: IndexPath) -> ResumeObject? {
+    switch indexPath.section {
+      case Sections.Jobs.rawValue: return self.resume.jobs?[indexPath.item]
+      case Sections.Education.rawValue: return self.resume.education?[indexPath.item]
+      case Sections.Projects.rawValue: return self.resume.projects?[indexPath.item]
+      case Sections.Certifications.rawValue: return self.resume.certifications?[indexPath.item]
+      case Sections.Skills.rawValue: return self.resume.skills?[indexPath.item]
+    default: return nil
     }
   }
-
 
 }
 
