@@ -16,6 +16,7 @@
 		E2179A411EE4EAC100E0E25A /* resume.json in Resources */ = {isa = PBXBuildFile; fileRef = E2179A401EE4EAC100E0E25A /* resume.json */; };
 		E2179A441EE4EB6B00E0E25A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2179A431EE4EB6B00E0E25A /* Model.swift */; };
 		E2179A461EECDCFB00E0E25A /* ObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2179A451EECDCFB00E0E25A /* ObjectManager.swift */; };
+		E22421A61EF630F50069EA63 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22421A51EF630F50069EA63 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E2179A401EE4EAC100E0E25A /* resume.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resume.json; sourceTree = "<group>"; };
 		E2179A431EE4EB6B00E0E25A /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		E2179A451EECDCFB00E0E25A /* ObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectManager.swift; sourceTree = "<group>"; };
+		E22421A51EF630F50069EA63 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				E2179A2E1EE4DD7600E0E25A /* MasterViewController.swift */,
 				E2179A301EE4DD7600E0E25A /* DetailViewController.swift */,
 				E2179A431EE4EB6B00E0E25A /* Model.swift */,
+				E22421A51EF630F50069EA63 /* Helpers.swift */,
 				E2179A321EE4DD7600E0E25A /* Main.storyboard */,
 				E2179A351EE4DD7600E0E25A /* Assets.xcassets */,
 				E2179A371EE4DD7600E0E25A /* LaunchScreen.storyboard */,
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2179A311EE4DD7600E0E25A /* DetailViewController.swift in Sources */,
+				E22421A61EF630F50069EA63 /* Helpers.swift in Sources */,
 				E2179A2F1EE4DD7600E0E25A /* MasterViewController.swift in Sources */,
 				E2179A461EECDCFB00E0E25A /* ObjectManager.swift in Sources */,
 				E2179A2D1EE4DD7600E0E25A /* AppDelegate.swift in Sources */,
@@ -320,6 +324,7 @@
 				E2179A3F1EE4DD7600E0E25A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

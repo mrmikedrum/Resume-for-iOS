@@ -8,19 +8,6 @@
 
 import Foundation
 
-fileprivate func extractArray<T: ResumeObject>(source: NSDictionary, key: String) -> [T]? {
-  if let array = source.object(forKey: key) as? NSArray {
-    var result = [T]()
-    for item in array {
-      //if let dict as? NSDictionary {
-      result.append(T(dictionary: item as! NSDictionary))
-      //}
-    }
-    return result
-  }
-  return nil
-}
-
 protocol ResumeObject {
   init(dictionary: NSDictionary)
   var name: String? { get }
