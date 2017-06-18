@@ -11,6 +11,16 @@ import Foundation
 protocol ResumeObject {
   init(dictionary: NSDictionary)
   var name: String? { get }
+  var secondary: String? { get }
+  var dates: String? { get }
+  var description: String? { get }
+  var link: URL? { get }
+}
+
+extension ResumeObject {
+  var dates: String? { return nil }
+  var secondary: String? { return nil }
+  var link: URL? { return nil }
 }
 
 class Resume {
@@ -53,6 +63,20 @@ class Job: ResumeObject {
   var endDate: String?
   var description: String?
   
+  var secondary: String? { return title }
+  
+  var dates: String? {
+    if let startDate = self.startDate, let endDate = self.endDate {
+      var dates = startDate
+      dates.append(dates.characters.count > 0 && endDate.characters.count > 0 ? " - " : "")
+      dates.append(endDate)
+      return dates
+    }
+    else {
+      return self.startDate ?? self.endDate
+    }
+  }
+    
   required init(dictionary: NSDictionary) {
     name = dictionary.object(forKey: "name") as? String
     title = dictionary.object(forKey: "title") as? String
@@ -69,6 +93,20 @@ class Education: ResumeObject {
   var endDate: String?
   var description: String?
   
+  var secondary: String? { return subject }
+  
+  var dates: String? {
+    if let startDate = self.startDate, let endDate = self.endDate {
+      var dates = startDate
+      dates.append(dates.characters.count > 0 && endDate.characters.count > 0 ? " - " : "")
+      dates.append(endDate)
+      return dates
+    }
+    else {
+      return self.startDate ?? self.endDate
+    }
+  }
+  
   required init(dictionary: NSDictionary) {
     name = dictionary.object(forKey: "name") as? String
     subject = dictionary.object(forKey: "subject") as? String
@@ -83,6 +121,8 @@ class Project: ResumeObject {
   var platform: String?
   var description: String?
   var link: URL?
+  
+  var secondary: String? { return platform }
   
   required init(dictionary: NSDictionary) {
     name = dictionary.object(forKey: "name") as? String
