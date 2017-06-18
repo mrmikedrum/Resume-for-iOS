@@ -12,6 +12,13 @@ class MasterViewController: UITableViewController {
   
   var resume: Resume!
   
+  @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var abstractLabel: UILabel!
+  @IBOutlet weak var phoneLabel: UILabel!
+  @IBOutlet weak var emailLabel: UILabel!
+  @IBOutlet weak var addressLabel: UILabel!
+  
   private enum Sections: Int {
     case Jobs
     case Education
@@ -29,22 +36,58 @@ class MasterViewController: UITableViewController {
     Sections.Skills.rawValue: "Skills",
   ]
 
-//  var detailViewController: DetailViewController? = nil
-
   override func viewDidLoad() {
     super.viewDidLoad()
     
     self.resume = ObjectManager.shared.resume
+
+    let image = UIImage()
+    self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
+    self.navigationController?.navigationBar.shadowImage = image
+    self.navigationController?.navigationBar.isTranslucent = false
+    self.navigationController?.navigationBar.barTintColor = UIColor.white
     
-//    if let split = splitViewController {
-//        let controllers = split.viewControllers
-//        detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-//    }
+    self.updateUI()
+    
   }
 
   override func viewWillAppear(_ animated: Bool) {
     clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
     super.viewWillAppear(animated)
+  }
+  
+  private func updateUI() {
+    if let firstName = self.resume.firstName, let lastName = self.resume.lastName {
+      var name = firstName
+      name.append(name.characters.count > 0 && lastName.characters.count > 0 ? " " : "")
+      name.append(lastName)
+      self.nameLabel.text = name
+      self.nameLabel.isHidden = false
+    } else {
+      self.nameLabel.isHidden = true
+    }
+    
+    fillOrHideLabel(self.titleLabel, withProperty: self.resume.title)
+    fillOrHideLabel(self.abstractLabel, withProperty: self.resume.abstract)
+    fillOrHideLabel(self.phoneLabel, withProperty: self.resume.phone)
+    fillOrHideLabel(self.emailLabel, withProperty: self.resume.email)
+    fillOrHideLabel(self.addressLabel, withProperty: self.resume.address)
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    self.sizeHeaderToFit(tableView: self.tableView)
+  }
+  
+  private func sizeHeaderToFit(tableView: UITableView) {
+    if let headerView = tableView.tableHeaderView {
+      let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+      var frame = headerView.frame
+      frame.size.height = height
+      headerView.frame = frame
+      tableView.tableHeaderView = headerView
+      headerView.setNeedsLayout()
+      headerView.layoutIfNeeded()
+    }
   }
 
   // MARK: - Segues
