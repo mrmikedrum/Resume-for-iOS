@@ -11,6 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
 
   @IBOutlet weak var stackView: UIStackView!
+  @IBOutlet weak var scrollView: UIScrollView!
 
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var secondaryLabel: UILabel!
@@ -20,7 +21,7 @@ class DetailViewController: UIViewController {
   
   func configureView() {
     if let detail = self.detailItem, self.isViewLoaded {
-      UIView.animate(withDuration: 0.25) {
+      UIView.animate(withDuration: 1) {
         fillOrHideLabel(self.nameLabel, withProperty: detail.name)
         fillOrHideLabel(self.secondaryLabel, withProperty: detail.secondary)
         fillOrHideLabel(self.datesLabel, withProperty: detail.dates)
