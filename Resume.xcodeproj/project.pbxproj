@@ -18,6 +18,7 @@
 		E2179A461EECDCFB00E0E25A /* ObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2179A451EECDCFB00E0E25A /* ObjectManager.swift */; };
 		E22421A61EF630F50069EA63 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22421A51EF630F50069EA63 /* Helpers.swift */; };
 		E22421AA1EFF2EFF0069EA63 /* UINavigationBar+Hiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22421A91EFF2EFF0069EA63 /* UINavigationBar+Hiding.swift */; };
+		E22421AC1F005DD50069EA63 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22421AB1F005DD50069EA63 /* UpdateManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		E2179A451EECDCFB00E0E25A /* ObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectManager.swift; sourceTree = "<group>"; };
 		E22421A51EF630F50069EA63 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		E22421A91EFF2EFF0069EA63 /* UINavigationBar+Hiding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Hiding.swift"; sourceTree = "<group>"; };
+		E22421AB1F005DD50069EA63 /* UpdateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			children = (
 				E2179A2C1EE4DD7600E0E25A /* AppDelegate.swift */,
 				E2179A451EECDCFB00E0E25A /* ObjectManager.swift */,
+				E22421AB1F005DD50069EA63 /* UpdateManager.swift */,
 				E2179A2E1EE4DD7600E0E25A /* MasterViewController.swift */,
 				E2179A301EE4DD7600E0E25A /* DetailViewController.swift */,
 				E22421A91EFF2EFF0069EA63 /* UINavigationBar+Hiding.swift */,
@@ -160,6 +163,7 @@
 				E22421AA1EFF2EFF0069EA63 /* UINavigationBar+Hiding.swift in Sources */,
 				E22421A61EF630F50069EA63 /* Helpers.swift in Sources */,
 				E2179A2F1EE4DD7600E0E25A /* MasterViewController.swift in Sources */,
+				E22421AC1F005DD50069EA63 /* UpdateManager.swift in Sources */,
 				E2179A461EECDCFB00E0E25A /* ObjectManager.swift in Sources */,
 				E2179A2D1EE4DD7600E0E25A /* AppDelegate.swift in Sources */,
 				E2179A441EE4EB6B00E0E25A /* Model.swift in Sources */,
