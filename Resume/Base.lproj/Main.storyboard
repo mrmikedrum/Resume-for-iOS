@@ -208,9 +208,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -233,6 +230,8 @@
                         <outlet property="nameLabel" destination="mT2-iq-v8U" id="nez-9J-SQP"/>
                         <outlet property="phoneLabel" destination="t4G-71-iee" id="8fm-nJ-qO9"/>
                         <outlet property="titleLabel" destination="Yxn-yT-SK8" id="IoL-2j-6qX"/>
+                        <segue destination="JEX-9P-axG" kind="showDetail" identifier="push" id="8Wx-bc-0vw"/>
+                        <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="show" id="FSb-je-1Uk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
@@ -257,6 +256,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="8Wx-bc-0vw"/>
+        <segue reference="Tll-UG-LXB"/>
     </inferredMetricsTieBreakers>
 </document>

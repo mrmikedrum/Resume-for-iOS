@@ -30,3 +30,9 @@ internal func fillOrHideLabel(_ label: UILabel, withProperty property: String?) 
   }
 }
 
+internal func displayingInSplitScreen() -> Bool {
+  if let splitViewController = UIApplication.shared.delegate?.window??.rootViewController as? UISplitViewController {
+    return !splitViewController.isCollapsed && splitViewController.displayMode == .allVisible
+  }
+  return false;
+}

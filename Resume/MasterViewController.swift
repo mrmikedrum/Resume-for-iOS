@@ -140,13 +140,17 @@ class MasterViewController: UITableViewController {
   // MARK: - Segues
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "showDetail" {
-        if let indexPath = tableView.indexPathForSelectedRow {
-            let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-            controller.detailItem = self.itemForRowAtIndexPath(indexPath)
-            controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-            controller.navigationItem.leftItemsSupplementBackButton = true
-        }
+    var detailController: DetailViewController? = nil
+    if segue.identifier == "show", let controller = segue.destination as? UINavigationController, let topController = controller.topViewController as? DetailViewController {
+      detailController = topController
+    }
+    else if segue.identifier == "push", let destination = segue.destination as? DetailViewController {
+      detailController = destination
+    }
+    if let indexPath = tableView.indexPathForSelectedRow, let detail = detailController {
+      detail.detailItem = self.itemForRowAtIndexPath(indexPath)
+      detail.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+      detail.navigationItem.leftItemsSupplementBackButton = true
     }
   }
 
@@ -179,7 +183,16 @@ class MasterViewController: UITableViewController {
     return cell
   }
   
-  fileprivate func itemForRowAtIndexPath(_ indexPath: IndexPath) -> ResumeObject? {
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if displayingInSplitScreen() {
+      self.performSegue(withIdentifier: "show", sender: nil)
+    }
+    else {
+      self.performSegue(withIdentifier: "push", sender: nil)
+    }
+  }
+  
+  private func itemForRowAtIndexPath(_ indexPath: IndexPath) -> ResumeObject? {
     switch indexPath.section {
       case Sections.Jobs.rawValue: return self.resume.jobs?[indexPath.item]
       case Sections.Education.rawValue: return self.resume.education?[indexPath.item]
