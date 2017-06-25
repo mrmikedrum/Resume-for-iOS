@@ -12,22 +12,54 @@ class ObjectManager {
   
   static let shared = ObjectManager()
   
-  let resume: Resume
+  private let defaultsKey = "ResumeKey"
+  
+  // MARK: - data access
+  
+  var resume: Resume { return _resume }
+  
+  private var _resume: Resume!
+  
+  func setResume(withDictionary dictionary: NSDictionary) {
+    _resume = Resume(dictionary: dictionary)
+  
+    // and write to UserDefaults
+    let defaults = UserDefaults.standard
+    defaults.set(dictionary, forKey: self.defaultsKey)
+    defaults.synchronize()
+  }
+  
+  // MARK: - initialization
   
   init() {
+    
+    // try to get the saved resume out of UserDefaults
+    let defaults = UserDefaults.standard
+    if let object = defaults.object(forKey: self.defaultsKey) as? NSDictionary {
+      setResume(withDictionary: object)
+      return
+    }
+    
+    var object: NSDictionary?
+    
+    // if it's not there, bootstrap with the bundled json
     guard let filePath = Bundle.main.path(forResource: "resume", ofType: "json"), let stream = InputStream(fileAtPath: filePath)
       else {
-        fatalError() //FIXME: handle missing file or just wait till it's networked idc
+        setResume(withDictionary: NSDictionary())
+        displayErrorAlert(withString: "Couldn't find bundled data to display. Something is seriously wrong with this app.")
+        return
     }
-    var object: NSDictionary?
     stream.open()
     do {
       object = try JSONSerialization.jsonObject(with: stream, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
     } catch {
-      fatalError() //FIXME: handle bad deserialization
+      object = NSDictionary()
+      defer {
+        displayErrorAlert(withString: "Couldn't read contents of bundled data. Something is seriously wrong with this app.")
+      }
     }
     
-    resume = Resume(dictionary: object!)
+    setResume(withDictionary: object!)
   }
   
 }

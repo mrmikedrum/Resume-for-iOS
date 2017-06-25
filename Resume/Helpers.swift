@@ -36,3 +36,34 @@ internal func displayingInSplitScreen() -> Bool {
   }
   return false;
 }
+
+internal func displayErrorAlert(withString string: String) {
+  guard let topViewController = topViewController() else { return }
+  
+  let alertController = UIAlertController(title: "Error", message: string, preferredStyle: UIAlertControllerStyle.alert)
+  
+  let okAction = UIAlertAction(title: "OK I guess...", style: UIAlertActionStyle.default)
+  alertController.addAction(okAction)
+  
+  DispatchQueue.main.async() {
+    topViewController.present(alertController, animated: true, completion: nil)
+  }
+}
+
+func topViewController(base: UIViewController? = UIApplication.shared.delegate?.window??.rootViewController) -> UIViewController? {
+  if let nav = base as? UINavigationController {
+    return topViewController(base: nav.visibleViewController)
+  }
+  if let split = base as? UISplitViewController {
+    if let right = split.viewControllers.last, right.isViewLoaded, (split.isCollapsed || split.traitCollection.horizontalSizeClass == .regular) {
+      return topViewController(base: right)
+    }
+    else if let left = split.viewControllers.first, left.isViewLoaded {
+      return topViewController(base: left)
+    }
+  }
+  if let presented = base?.presentedViewController {
+    return topViewController(base: presented)
+  }
+  return base
+}
