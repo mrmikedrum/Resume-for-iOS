@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, ScrollingNavBarViewController {
   
   var resume: Resume!
   
@@ -20,8 +20,7 @@ class MasterViewController: UITableViewController {
   @IBOutlet weak var addressLabel: UILabel!
   
   private var abbreviatedName: String!
-  private var barHidden = true
-  
+    
   private enum Sections: Int {
     case Jobs
     case Education
@@ -51,7 +50,7 @@ class MasterViewController: UITableViewController {
     
     self.navigationController?.view.backgroundColor = UIColor.white
 
-    self.hideNavigationBar()
+    self.updateNavigationBar()
     
     self.updateUI()
     
@@ -81,7 +80,9 @@ class MasterViewController: UITableViewController {
   }
   
   override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
     self.sizeHeaderToFit(tableView: self.tableView)
+    self.updateNavigationBar()
   }
   
   private func sizeHeaderToFit(tableView: UITableView) {
@@ -98,43 +99,19 @@ class MasterViewController: UITableViewController {
   
   // MARK: - Magic
   
-  private func hideNavigationBar() {
-    if !self.barHidden {
-      let image = UIImage()
-      UIView.animate(withDuration: 0.25) {
-        self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
-        self.navigationItem.title = ""
-      }
-      self.barHidden = true
-    }
+  var scrollView: UIScrollView! { return self.tableView }
+  var headerView: UIView { return self.nameLabel }
+  
+  func navBarDidHide() {
+    self.navigationItem.title = ""
   }
   
-  private func showNavigationBar() {
-    if self.barHidden {
-      self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-      self.navigationController?.navigationBar.barTintColor = UIColor.white
-      
-      let fadeTextAnimation = CATransition()
-      fadeTextAnimation.duration = 0.5
-      fadeTextAnimation.type = kCATransitionMoveIn
-      self.navigationController?.navigationBar.layer.add(fadeTextAnimation, forKey: "fadeText")
-      
-      self.navigationItem.title = self.abbreviatedName
-      
-      self.barHidden = false;
-    }
+  func navBarDidShow() {
+    self.navigationItem.title = self.abbreviatedName
   }
   
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if (self.nameLabel.frame.origin.y + (self.nameLabel.frame.size.height / 2) >
-      self.tableView.contentOffset.y) {
-      self.hideNavigationBar()
-    } else {
-      self.showNavigationBar()
-    }
+    self.updateNavigationBar()
   }
 
   // MARK: - Segues

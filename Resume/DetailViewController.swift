@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UIScrollViewDelegate, ScrollingNavBarViewController {
 
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var scrollView: UIScrollView!
@@ -40,6 +40,11 @@ class DetailViewController: UIViewController {
     super.viewDidLoad()
     configureView()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.updateNavigationBar()
+  }
 
   var detailItem: ResumeObject? {
     didSet {
@@ -53,6 +58,23 @@ class DetailViewController: UIViewController {
       UIApplication.shared.open(url, options: [:])
     }
   }
+  
+  // MARK: - Magic
+  
+  var headerView: UIView { return self.nameLabel }
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    self.updateNavigationBar()
+  }
+  
+  func navBarDidHide() {
+    self.navigationItem.title = ""
+  }
+  
+  func navBarDidShow() {
+    self.navigationItem.title = self.nameLabel.text
+  }
+  
 
 }
 
