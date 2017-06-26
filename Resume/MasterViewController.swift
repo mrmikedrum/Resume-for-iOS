@@ -44,6 +44,7 @@ class MasterViewController: UITableViewController, ScrollingNavBarViewController
     super.viewDidLoad()
     
     self.resume = ObjectManager.shared.resume
+    NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: UpdateNotification, object: nil)
     
     let firstInitial = self.resume.firstName?.characters.first
     self.abbreviatedName = (firstInitial != nil ? String(firstInitial!) : "") + (self.resume.lastName ?? "")
@@ -53,7 +54,10 @@ class MasterViewController: UITableViewController, ScrollingNavBarViewController
     self.updateNavigationBar()
     
     self.updateUI()
-    
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -188,5 +192,11 @@ class MasterViewController: UITableViewController, ScrollingNavBarViewController
     }
   }
   
+  func reload() {
+    self.resume = ObjectManager.shared.resume
+    self.refreshControl?.endRefreshing()
+    self.tableView.reloadData()
+    self.updateUI()
+  }
 }
 

@@ -8,6 +8,8 @@
 
 import Foundation
 
+let UpdateNotification = Notification.Name(rawValue:"Updated")
+
 class ObjectManager {
   
   static let shared = ObjectManager()
@@ -31,6 +33,11 @@ class ObjectManager {
       let defaults = UserDefaults.standard
       defaults.set(dictionary, forKey: self.defaultsKey)
       defaults.synchronize()
+      
+      // and send a notification
+      DispatchQueue.main.async {
+        NotificationCenter.default.post(name:UpdateNotification, object: nil, userInfo: nil)
+      }
     }
   }
   
