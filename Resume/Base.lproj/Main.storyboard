@@ -225,6 +225,9 @@
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="K8w-NB-ekM">
                         <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="handleRefresh:" destination="7bK-jq-Zjz" eventType="valueChanged" id="KbA-D7-VOf"/>
+                        </connections>
                     </refreshControl>
                     <connections>
                         <outlet property="abstractLabel" destination="2Sz-a3-4lX" id="Lzv-c7-lN7"/>
@@ -260,6 +263,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="8Wx-bc-0vw"/>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="FSb-je-1Uk"/>
     </inferredMetricsTieBreakers>
 </document>

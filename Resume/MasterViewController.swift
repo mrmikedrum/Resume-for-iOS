@@ -10,7 +10,7 @@ import UIKit
 
 class MasterViewController: UITableViewController, ScrollingNavBarViewController {
   
-  var resume: Resume!
+  weak var resume: Resume!
   
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var titleLabel: UILabel!
@@ -179,6 +179,14 @@ class MasterViewController: UITableViewController, ScrollingNavBarViewController
     default: return nil
     }
   }
+  
+  // MARK: - updating
 
+  @IBAction func handleRefresh(_ sender: UIRefreshControl) {
+    UpdateManager.shared.update() {
+      self.refreshControl?.endRefreshing()
+    }
+  }
+  
 }
 

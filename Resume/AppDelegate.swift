@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
       splitViewController.preferredDisplayMode = .allVisible
     }
     
+    UpdateManager.shared.update()
     return true
   }
 

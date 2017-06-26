@@ -21,12 +21,17 @@ class ObjectManager {
   private var _resume: Resume!
   
   func setResume(withDictionary dictionary: NSDictionary) {
-    _resume = Resume(dictionary: dictionary)
-  
-    // and write to UserDefaults
-    let defaults = UserDefaults.standard
-    defaults.set(dictionary, forKey: self.defaultsKey)
-    defaults.synchronize()
+    let newResume = Resume(dictionary: dictionary)
+    
+    // only set if resume has updated
+    if let newVersion = newResume.version, newVersion > _resume?.version ?? 0 {
+      _resume = newResume
+      
+      // and write to UserDefaults
+      let defaults = UserDefaults.standard
+      defaults.set(dictionary, forKey: self.defaultsKey)
+      defaults.synchronize()
+    }
   }
   
   // MARK: - initialization
