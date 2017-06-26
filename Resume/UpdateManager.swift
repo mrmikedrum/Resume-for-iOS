@@ -22,7 +22,11 @@ class UpdateManager {
     // start a new task if we aren't already waiting for a response
     if self.completionHandlers.isEmpty {
       
-      let session = URLSession.shared
+      let config = URLSessionConfiguration.default
+      config.requestCachePolicy = .reloadIgnoringLocalCacheData
+      config.urlCache = nil
+      
+      let session = URLSession.init(configuration: config)
       
       let task = session.dataTask(with: url, completionHandler: self.dataTaskCompletionHandler)
       task.resume()
